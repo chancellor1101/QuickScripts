@@ -69,13 +69,16 @@ echo "Performing distribution upgrade..."
 sudo apt-get dist-upgrade -y
 echo "Distribution upgraded."
 
-# Change hostname if provided
 if [ -n "$hostname" ]; then
     echo "Changing hostname to $hostname..."
     sudo hostnamectl set-hostname $hostname
     echo "Hostname changed."
     # Update hosts file
-    sudo sed -i "s/127.0.1.1\s*.*\s*$/127.0.1.1\t$hostname/" /etc/hosts
+    if grep -q "$hostname" /etc/hosts; then
+        sudo sed -i "s/.*$hostname/$(/bin/hostname -I | awk '{print $1}')\t$hostname/" /etc/hosts
+    else
+        echo "$(hostname -I | awk '{print $1}')\t$hostname" | sudo tee -a /etc/hosts > /dev/null
+    fi
     echo "Hosts file updated."
 fi
 
