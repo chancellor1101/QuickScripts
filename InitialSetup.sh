@@ -75,7 +75,7 @@ if [ -n "$hostname" ]; then
     sudo hostnamectl set-hostname $hostname
     echo "Hostname changed."
     # Update hosts file
-    sudo sed -i "s/127.0.1.1.*/127.0.1.1 $hostname/" /etc/hosts
+    sudo sed -i "s/127.0.1.1\s*.*\s*$/127.0.1.1\t$hostname/" /etc/hosts
     echo "Hosts file updated."
 fi
 
