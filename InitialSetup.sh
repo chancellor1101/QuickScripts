@@ -75,9 +75,9 @@ if [ -n "$hostname" ]; then
     echo "Hostname changed."
     # Update hosts file
     if grep -q "$hostname" /etc/hosts; then
-        sudo sed -i "s/.*$hostname/$(/bin/hostname -I | awk '{print $1}')\t$hostname/" /etc/hosts
+        sudo sed -i "s/.*$hostname/$(/bin/hostname -I | awk '{print $1}')    $hostname/" /etc/hosts
     else
-        echo "$(hostname -I | awk '{print $1}')\t$hostname" | sudo tee -a /etc/hosts > /dev/null
+        echo "$(hostname -I | awk '{print $1}')    $hostname" | sudo tee -a /etc/hosts > /dev/null
     fi
     echo "Hosts file updated."
 fi
