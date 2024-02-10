@@ -5,7 +5,7 @@ echo "Updating package index..."
 sudo apt update
 
 echo "Installing required dependencies..."
-sudo apt install -y apt-transport-https ca-certificates curl software-properties-common git
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common git gnupg2
 
 echo "Adding Docker's official GPG key..."
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
