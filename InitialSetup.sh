@@ -2,7 +2,7 @@
 
 # Function to display usage
 usage() {
-    echo "Usage: $0 [-u <username>] [-p <password>] [-g <groupname>] [-m <manager_ip>]" 1>&2 
+    echo "Usage: $0 [-u <username>] [-p <password>] [-g <groupname>] [-m <manager_ip>] [-h <hostname>]" 1>&2 
     exit 1
 }
 
@@ -11,9 +11,10 @@ username=""
 password=""
 groupname=""
 manager=""
+hostname=""
 
 # Parse arguments
-while getopts ":u:p:g:m:" opt; do
+while getopts ":u:p:g:m:h:" opt; do
     case ${opt} in
         u )
             username=$OPTARG
@@ -26,6 +27,9 @@ while getopts ":u:p:g:m:" opt; do
             ;;
         m )
             manager=$OPTARG
+            ;;
+        h )
+            hostname=$OPTARG
             ;;
         \? )
             echo "Invalid option: $OPTARG" 1>&2
@@ -54,10 +58,12 @@ echo "Performing distribution upgrade..."
 sudo apt-get dist-upgrade -y
 echo "Distribution upgraded."
 
-# Change hostname to graylog.teammts.com
-echo "Changing hostname to graylog.teammts.com..."
-sudo hostnamectl set-hostname graylog.teammts.com
-echo "Hostname changed."
+# Change hostname if provided
+if [ -n "$hostname" ]; then
+    echo "Changing hostname to $hostname..."
+    sudo hostnamectl set-hostname $hostname
+    echo "Hostname changed."
+fi
 
 # Reboot if necessary
 if [ -f /var/run/reboot-required ]; then
