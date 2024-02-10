@@ -38,6 +38,13 @@ git clone https://github.com/Graylog2/docker-compose.git
 echo "Renaming .env.example to .env..."
 mv docker-compose/open-core/.env.example docker-compose/open-core/.env
 
+# Generate a random 96-character string for GRAYLOG_PASSWORD_SECRET
+random_secret=$(openssl rand -hex 64)
+
+echo "Setting GRAYLOG_PASSWORD_SECRET to a random 96-character string..."
+sed -i "s/^GRAYLOG_PASSWORD_SECRET=.*/GRAYLOG_PASSWORD_SECRET=$random_secret/" docker-compose/open-core/.env
+
+
 # Prompt for password
 read -s -p "Enter your password: " password
 echo
