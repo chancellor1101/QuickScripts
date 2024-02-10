@@ -13,6 +13,17 @@ groupname=""
 manager=""
 hostname=""
 
+# Check if arguments are provided
+if [ "$#" -eq 0 ]; then
+    echo "No arguments provided. Please provide the following information:"
+    read -p "Username: " username
+    read -sp "Password: " password
+    echo
+    read -p "Groupname: " groupname
+    read -p "Wazuh Manager IP: " manager
+    read -p "Hostname: " hostname
+fi
+
 # Parse arguments
 while getopts ":u:p:g:m:h:" opt; do
     case ${opt} in
@@ -63,6 +74,9 @@ if [ -n "$hostname" ]; then
     echo "Changing hostname to $hostname..."
     sudo hostnamectl set-hostname $hostname
     echo "Hostname changed."
+    # Update hosts file
+    sudo sed -i "s/127.0.1.1.*/127.0.1.1 $hostname/" /etc/hosts
+    echo "Hosts file updated."
 fi
 
 # Reboot if necessary
