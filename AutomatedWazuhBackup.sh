@@ -3,7 +3,7 @@
 # Set variables for current date and destination folder
 current_date=$(date +%Y-%m)
 destination_folder="/mnt/wasabi/$current_date"
-originating_folder="/var/ossec/logs/archive/"
+originating_folder="/var/ossec/logs/archives/"
 
 # Create the destination folder if it doesn't exist
 mkdir -p "$destination_folder"
