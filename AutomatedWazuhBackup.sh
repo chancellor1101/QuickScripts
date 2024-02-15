@@ -9,6 +9,6 @@ originating_folder="/var/ossec/logs/archives/"
 mkdir -p "$destination_folder"
 
 # Find all files with the specified extensions
-find "$originating_folder" -type f \( -name "*.sum" -or -name "*.gz" \) -exec cp -t "$destination_folder" {} \;
+find "$originating_folder" -type f \( -name "*.sum" -or -name "*.gz" \) -exec mv -t "$destination_folder" {} \;
 
 echo "Files moved successfully to $destination_folder"
